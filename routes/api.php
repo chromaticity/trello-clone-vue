@@ -21,7 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-
 // Routes dedicated to logging in and registering. 
 Route::post('login', 'UsersController@login');
 Route::post('register', 'UsersController@register');
@@ -32,6 +31,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     // Resource controller routes. Mostly just tasks and categories.
 	Route::resource('/task', 'TaskController');
 	Route::resource('/category', 'CategoryController');
+
+	// Any user related routes such as profiles, etc. go here.
+	Route::get('getDetails', 'UsersController@getDetails');
 
     // Specific route for returning tasks by category.
 	Route::get('/category/{category}/tasks', 'CategoryController@tasks');
