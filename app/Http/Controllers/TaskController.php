@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -36,6 +36,29 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
+
+        $task = Task::store([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'user_id'   =>  $request->user_id,
+            'order' =>  $request->order
+        ]);
+
+        // Check if the task was stored succesfully.
+        if($task) {
+            $message = "Task created!";
+        } else {
+            $message = "Failed to create task.";
+        }
+
+
+        $responseData = [
+            'data' => $task,
+            'status' => (bool) $task,
+            'message' => $message
+        ];
+
+        return response()->json($responseData);
     }
 
     /**

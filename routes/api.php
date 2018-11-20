@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+// Resource controller routes. Mostly just tasks and categories.
+Route::resource('/task', 'TaskController');
+Route::resource('/category', 'CategoryController');
+
+// Specific route for returning tasks by category.
+Route::get('/category/{category}/tasks', 'CategoryController@tasks');
