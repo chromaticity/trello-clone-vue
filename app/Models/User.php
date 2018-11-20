@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 // Necessary for web token authenticatio and securing our endpoints.
@@ -29,6 +30,17 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    /**
+    * validation rules.
+    *
+    */
+
+    public static $rules = [
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required',
     ];
 
     // --- Relationships --- // 
