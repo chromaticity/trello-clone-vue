@@ -6,9 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+// Necessary for web token authenticatio and securing our endpoints.
+use Laravel\Passport\HasApiTokens;
+
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, SoftDeletes, Notifiable;
 
     /**
      * The attributes that are mass assignable.
