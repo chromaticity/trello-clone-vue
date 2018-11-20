@@ -39,6 +39,21 @@ class UsersController extends Controller
     	}
     }
 
+    // function for logging out.
+    public function logout() 
+    {
+    	if (Auth::check()) {
+            Auth::user()->AauthAccessToken()->delete();
+            return response()->json(
+                    array(
+                        'status' => 200,
+                        'message' => "User logged out.",
+                        'reason' => "User logged out successfully.",
+                ), 200
+            );
+        }
+    }
+
     // Registration function for registering the user.
 
     public function register(Request $request) 

@@ -16,11 +16,6 @@ use Illuminate\Http\Request;
 
 // Using REST convention for the routes, or as close I can get to it anyway.
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 // Routes dedicated to logging in and registering. 
 Route::post('login', 'UsersController@login');
 Route::post('register', 'UsersController@register');
@@ -34,6 +29,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 	// Any user related routes such as profiles, etc. go here.
 	Route::get('getDetails', 'UsersController@getDetails');
+	Route::post('logout', 'UsersController@logout');
 
     // Specific route for returning tasks by category.
 	Route::get('/category/{category}/tasks', 'CategoryController@tasks');

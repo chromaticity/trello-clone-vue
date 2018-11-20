@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        // Test response for now.
+        return response()->json(Category::all()->toArray());
     }
 
     /**

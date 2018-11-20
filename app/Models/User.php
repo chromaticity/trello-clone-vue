@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    // relationship for oauth access tokens, that way users can log out. even on a per-device basis.
+    public function AauthAccessToken(){
+        return $this->hasMany(\App\Models\OauthAccessToken::class);
+    }
 }
