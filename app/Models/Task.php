@@ -10,9 +10,9 @@ class Task extends Model
     //
     use SoftDeletes;
 
-	$table = "tasks";
+	protected $table = "tasks";
 
-	$fillable = ['name', 'category_id', 'user_id', 'order'];
+	protected $fillable = ['name', 'category_id', 'user_id', 'order'];
 
 
 	// ---- Relationships ---- //

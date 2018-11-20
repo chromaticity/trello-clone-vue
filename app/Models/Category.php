@@ -11,9 +11,9 @@ class Category extends Model
 
     use SoftDeletes;
 
-	$table = "categories";
+	protected $table = "categories";
 
-	$fillable = ['name'];
+	protected $fillable = ['name'];
 
 
 	// ---- Relationships ---- //
