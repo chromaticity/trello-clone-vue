@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-laravel navbar-light">
             <div class="container">
                 <!-- link back to the home page using the router-link attr. -->
                 <router-link :to="{name: 'home'}" class="navbar-brand">Trellu</router-link>
@@ -9,12 +9,18 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
+
+                    <!-- Nav Left Side -->
                     <ul class="navbar-nav mr-auto"></ul>
-                    <!-- Right Side Of Navbar -->
+
+                    <!-- Nav Right Side -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-link"> Welcome!</li>
+                        <router-link :to="{ name: 'login' }" class="nav-link" v-if="!isLoggedIn">Login</router-link>
+                        <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
+                        <li class="nav-link" v-if="isLoggedIn"> Hello, {{name}}</li>
+                        <router-link :to="{ name: 'board' }" class="nav-link" v-if="isLoggedIn">Board</router-link>
                     </ul>
+
                 </div>
             </div>
         </nav>
@@ -25,5 +31,16 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        data(){
+            return {
+                isLoggedIn : null,
+                name : null
+            }
+        },
+        mounted(){
+            this.isLoggedIn = localStorage.getItem('jwt')
+            this.name = localStorage.getItem('user')
+        }
+    }
 </script>
