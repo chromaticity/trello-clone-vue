@@ -25,6 +25,7 @@
             </div>
         </nav>
         <main class="py-4">
+            <!-- <router-view> renders whatever is accessed at a given path in the routes. -->
             <router-view></router-view>
         </main>
     </div>
@@ -36,7 +37,8 @@
             // Keeping track whether the user is logged in or not. Also keeping track of their username.
             return {
                 isLoggedIn : null,
-                name : null
+                name : null,
+                userId: null
             }
         },
 
@@ -44,6 +46,7 @@
         mounted(){
             this.isLoggedIn = localStorage.getItem('userToken')
             this.name = localStorage.getItem('user')
+            this.userId = localStorage.getItem('userId');
         }
     }
 </script>

@@ -64,6 +64,7 @@
                       .then(response => {
                         localStorage.setItem('user',response.data.success.name)
                         localStorage.setItem('userToken',response.data.success.token)
+                        localStorage.setItem('userId',response.data.success.id)
 
                         if (localStorage.getItem('userToken') != null){
                             this.$router.go('/board')

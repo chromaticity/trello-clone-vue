@@ -72,7 +72,6 @@ class TaskController extends Controller
     {
         //
         $updateTask = $task->fill($request->toArray());
-        \Log::info($request);
         $task->save();
 
         return response()->json([
@@ -90,7 +89,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
-        $deleteTask = $task->delete();
+        $task->delete();
 
         return response()->json([
             'status' => $deleteTask,

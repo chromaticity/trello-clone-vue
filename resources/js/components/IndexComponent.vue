@@ -1,12 +1,12 @@
 <template>
     <div class="flex-center position-ref full-height">
         <div class="content">
-            <div  class="m-b-md">
+            <div class="m-b-md">
                 <h2 class="title m-b-md">
                     Trellu
                 </h2>
                 <h3>
-                    A clone of trello.
+                    Another trello clone.
                 </h3>
             </div>
         </div>
