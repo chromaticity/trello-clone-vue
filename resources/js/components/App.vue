@@ -33,13 +33,16 @@
 <script>
     export default {
         data(){
+            // Keeping track whether the user is logged in or not. Also keeping track of their username.
             return {
                 isLoggedIn : null,
                 name : null
             }
         },
+
+        // Once this is mounted (like in react) then set the isLoggedIn and name variables for use.
         mounted(){
-            this.isLoggedIn = localStorage.getItem('jwt')
+            this.isLoggedIn = localStorage.getItem('userToken')
             this.name = localStorage.getItem('user')
         }
     }

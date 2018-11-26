@@ -40,26 +40,32 @@
 
 <script>
     export default {
+        // This will be the same exact thing as the registration form. 
         data(){
             return {
                 email : "",
                 password : ""
             }
         },
+
+        // do submission of the form.
         methods : {
             handleSubmit(e){
                 e.preventDefault()
 
+                // check if the password field is empty
                 if (this.password.length > 0) {
-                    axios.post('api/login', {
+
+                    //Attempt to login using login API route laravel side
+                    axios.post('/api/login', {
                         email: this.email,
                         password: this.password
                       })
                       .then(response => {
                         localStorage.setItem('user',response.data.success.name)
-                        localStorage.setItem('jwt',response.data.success.token)
+                        localStorage.setItem('userToken',response.data.success.token)
 
-                        if (localStorage.getItem('jwt') != null){
+                        if (localStorage.getItem('userToken') != null){
                             this.$router.go('/board')
                         }
                       })
@@ -70,7 +76,7 @@
             }
         },
         beforeRouteEnter (to, from, next) { 
-            if (localStorage.getItem('jwt')) {
+            if (localStorage.getItem('userToken')) {
                 return next('board');
             }
 

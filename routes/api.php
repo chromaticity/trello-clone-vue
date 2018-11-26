@@ -34,4 +34,5 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     // Specific route for returning tasks by category.
 	Route::get('/category/{category}/tasks', 'CategoryController@tasks');
+	
 });

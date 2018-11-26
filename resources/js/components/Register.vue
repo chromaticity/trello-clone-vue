@@ -74,6 +74,7 @@
                 // Check if password confirmation is valid and password is not empty.
                 if (this.password === this.password_confirmation && this.password.length > 0)
                 {
+                    console.log(this.name)
                     // Run simple axios request to my API route to register.
                     axios.post('/api/register', {
                         name: this.name,
@@ -84,10 +85,10 @@
                       .then(response => {
                         // Get the name and token from the successful login request, and put them in localStorage for Auth purposes.
                         localStorage.setItem('user',response.data.success.name)
-                        localStorage.setItem('jwt',response.data.success.token)
+                        localStorage.setItem('userToken',response.data.success.token)
 
                         // If there is an auth token, then send them to their board with their tasks. 
-                        if (localStorage.getItem('jwt') != null){
+                        if (localStorage.getItem('userToken') != null){
                             this.$router.go('/board')
                         }
                       })
@@ -103,9 +104,9 @@
                 }
             }
         },
-        
+
         beforeRouteEnter (to, from, next) { 
-            if (localStorage.getItem('jwt')) {
+            if (localStorage.getItem('userToken')) {
                 return next('board');
             }
 
