@@ -15062,15 +15062,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        addNew: function addNew(id) {},
-        loadTasks: function loadTasks() {},
-        changeOrder: function changeOrder(data) {},
-        endEditing: function endEditing(task) {},
+        addNew: function addNew(id) {
+            var _this = this;
+
+            var user_id = 1;
+            var name = "New task";
+            var category_id = this.categories[id].id;
+            var order = this.categories[id].tasks.length;
+
+            axios.post('/api/task', { user_id: user_id, name: name, order: order, category_id: category_id }).then(function (response) {
+                _this.categories[id].tasks.push(response.data.data);
+            });
+        },
+        loadTasks: function loadTasks() {
+            this.categories.map(function (category) {
+                axios.get('/api/category/' + category.id + '/tasks').then(function (response) {
+                    category.tasks = response.data;
+                });
+            });
+        },
+        changeOrder: function changeOrder(data) {
+            var toTask = data.to;
+            var fromTask = data.from;
+            var task_id = data.item.id;
+            var category_id = fromTask.id == toTask.id ? null : toTask.id;
+            var order = data.newIndex == data.oldIndex ? false : data.newIndex;
+
+            if (order !== false) {
+                axios.put('/api/task/' + task_id, { order: order, category_id: category_id }).then(function (response) {
+                    //
+                });
+            }
+        },
+        endEditing: function endEditing(task) {
+            this.editingTask = null;
+
+            axios.put('/api/task/' + task.id, { name: task.name }).then(function (response) {
+                //
+            });
+        },
         editTask: function editTask(task) {
             this.editingTask = task;
         }
     },
-    mounted: function mounted() {},
+
+    mounted: function mounted() {
+        var _this2 = this;
+
+        var token = localStorage.getItem('userToken');
+
+        axios.defaults.headers.common['Content-Type'] = 'application/json';
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+        axios.get('/api/category').then(function (response) {
+            response.data.forEach(function (data) {
+                _this2.categories.push({
+                    id: data.id,
+                    name: data.name,
+                    tasks: []
+                });
+            });
+            _this2.loadTasks();
+        });
+    },
 
     computed: {
         dragOptions: function dragOptions() {

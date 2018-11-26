@@ -73,18 +73,67 @@
         },
         methods : {
             addNew(id) {
+                let user_id = 1
+                let name = "New task"
+                let category_id = this.categories[id].id
+                let order = this.categories[id].tasks.length
+
+                axios.post('/api/task', {user_id, name, order, category_id}).then(response => {
+                    this.categories[id].tasks.push(response.data.data)
+                })
             },
+
             loadTasks() {
+                this.categories.map(category => {
+                  axios.get(`/api/category/${category.id}/tasks`).then(response => {
+                      category.tasks = response.data
+                  })
+              })
             },
+
             changeOrder(data){
+                let toTask = data.to
+                let fromTask = data.from
+                let task_id = data.item.id
+                let category_id = fromTask.id == toTask.id ? null : toTask.id
+                let order = data.newIndex == data.oldIndex ? false : data.newIndex
+
+                if (order !== false) {
+                    axios.put(`/api/task/${task_id}`, {order, category_id}).then(response => {
+                        //
+                    });
+                }
             },
+
             endEditing(task) {
+                this.editingTask = null
+
+                axios.put(`/api/task/${task.id}`, {name: task.name}).then(response => {
+                    //
+                })
             },
+
             editTask(task){
                 this.editingTask = task
             }
         },
+
         mounted(){
+            let token = localStorage.getItem('userToken')
+
+            axios.defaults.headers.common['Content-Type'] = 'application/json'
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+
+            axios.get('/api/category').then(response => {
+                response.data.forEach((data) => {
+                    this.categories.push({
+                        id : data.id,
+                        name : data.name,
+                        tasks : []
+                    })
+                })
+                this.loadTasks()
+            })
         },
         computed: {
             dragOptions () {

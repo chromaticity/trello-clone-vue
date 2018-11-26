@@ -28,15 +28,11 @@ class TaskController extends Controller
     {
         //
 
-        $task = Task::store([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'user_id'   =>  $request->user_id,
-            'order' =>  $request->order
-        ]);
+        $task = new Task;
+        $task->fill($request->toArray());
 
         // Check if the task was stored succesfully.
-        if($task) {
+        if($task->save()) {
             $message = "Task created!";
         } else {
             $message = "Failed to create task.";
@@ -75,12 +71,9 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
-        $updateTask = $task->update([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'user_id' => $request->user_id,
-            'order' => $request->order
-        ]);
+        $updateTask = $task->fill($request->toArray());
+        \Log::info($request);
+        $task->save();
 
         return response()->json([
             'status' => $updateTask,
