@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Auth::routes();
+// Only need a single web route for this app.
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{any}', 'SinglePageController@index')->where('any', '.*');
