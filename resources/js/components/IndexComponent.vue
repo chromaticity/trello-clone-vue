@@ -13,6 +13,7 @@
     </div>
 </template>
 
+<!-- scoped attr means that the styling will apply to the current component only. -->
 <style scoped>
     .full-height {
         height: 100vh;
