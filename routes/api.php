@@ -23,6 +23,7 @@ Route::post('register', 'UsersController@register');
 
 // Routes protected by passport authentication.
 Route::group(['middleware' => 'auth:api'], function(){
+	
     // Resource controller routes. Mostly just tasks and categories.
 	Route::resource('/task', 'TaskController');
 	Route::resource('/category', 'CategoryController');

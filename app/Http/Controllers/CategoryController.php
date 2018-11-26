@@ -19,16 +19,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -37,6 +27,22 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+
+        $category = new Category;
+
+        $category = $request->name;
+
+        if($category->save()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Category added successfully.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Failed to add category.'
+            ]);
+        }
     }
 
     /**
@@ -48,17 +54,17 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        return response()->json($category);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
+     * Returns all of the tasks by category.
+     * @param Category $category 
+     * @return type
      */
-    public function edit(Category $category)
+    public function tasks(Category $category)
     {
-        //
+        return response()->json($category->tasks()->orderBy('order')->get());
     }
 
     /**
@@ -71,6 +77,12 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $category = $category->update($request->name);
+
+        return response()->json([
+            'status' => $category,
+            'message' => $category ? 'Category updated.' : 'Failed to update category.'      
+        ]);
     }
 
     /**
@@ -82,5 +94,11 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $deleteCategory = $category->delete();
+
+        return response()->json([
+            'status' => $deleteCategory,
+            'message' => $deleteCategory ? 'Category deleted.' : 'Failed to delete category.'
+        ]);
     }
 }

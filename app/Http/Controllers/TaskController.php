@@ -14,17 +14,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        // just return all tasks.
+        return response()->json(Task::all()->toArray());
     }
 
     /**
@@ -70,18 +61,9 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         //
+        return response()->json($task);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -93,6 +75,17 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         //
+        $updateTask = $task->update([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'user_id' => $request->user_id,
+            'order' => $request->order
+        ]);
+
+        return response()->json([
+            'status' => $updateTask,
+            'message' => $updateTask ? 'Task updated successfully.' : 'Failed to update task.'
+        ]);
     }
 
     /**
@@ -104,5 +97,11 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+        $deleteTask = $task->delete();
+
+        return response()->json([
+            'status' => $deleteTask,
+            'message' => $deleteTask ? 'Task delete successfully.' : 'Failed to delete task.'
+        ]);
     }
 }
