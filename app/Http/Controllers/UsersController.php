@@ -31,7 +31,11 @@ class UsersController extends Controller
     		$success['token'] = Auth::user()->createToken($tokenName)->accessToken;
     		
     		// Return the successful response.
-    		return response()->json(['success' => $success], 200);
+    		return response()->json([
+                'success' => $success, 
+                'name' => Auth::user()->name,
+                'id' => Auth::user()->id,
+            ], 200);
 
     	} 
     	else {
@@ -42,6 +46,7 @@ class UsersController extends Controller
     // function for logging out.
     public function logout() 
     {
+        // wipe the user's oauth token from the database once they log out.
     	if (Auth::check()) {
             Auth::user()->AauthAccessToken()->delete();
             return response()->json(

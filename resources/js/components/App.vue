@@ -17,8 +17,9 @@
                     <ul class="navbar-nav ml-auto">
                         <router-link :to="{ name: 'login' }" class="nav-link" v-if="!isLoggedIn">Login</router-link>
                         <router-link :to="{ name: 'register' }" class="nav-link" v-if="!isLoggedIn">Register</router-link>
-                        <li class="nav-link" v-if="isLoggedIn"> Hello, {{name}}</li>
+                        <li class="nav-link" v-if="isLoggedIn"> Hello, {{username}}</li>
                         <router-link :to="{ name: 'board' }" class="nav-link" v-if="isLoggedIn">Board</router-link>
+                        <a href="#" class="nav-link" @click="logout()" v-if="isLoggedIn">Logout</a>
                     </ul>
 
                 </div>
@@ -37,16 +38,25 @@
             // Keeping track whether the user is logged in or not. Also keeping track of their username.
             return {
                 isLoggedIn : null,
-                name : null,
+                username : null,
                 userId: null
             }
         },
 
         // Once this is mounted (like in react) then set the isLoggedIn and name variables for use.
         mounted(){
-            this.isLoggedIn = localStorage.getItem('userToken')
-            this.name = localStorage.getItem('user')
+            this.isLoggedIn = localStorage.getItem('userToken');
+            this.username = localStorage.getItem('username');
             this.userId = localStorage.getItem('userId');
+        },
+
+        methods: {
+            // logout method that logs the user out when clicking on the Logout button.
+            logout() {
+                localStorage.clear();
+                axios.post('/api/logout');
+                this.$router.go('/login');
+            }
         }
     }
 </script>

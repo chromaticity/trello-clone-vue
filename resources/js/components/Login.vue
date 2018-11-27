@@ -62,9 +62,11 @@
                         password: this.password
                       })
                       .then(response => {
-                        localStorage.setItem('user',response.data.success.name)
+                        localStorage.setItem('username',response.data.name)
                         localStorage.setItem('userToken',response.data.success.token)
                         localStorage.setItem('userId',response.data.success.id)
+
+                        console.log(response);
 
                         if (localStorage.getItem('userToken') != null){
                             this.$router.go('/board')
