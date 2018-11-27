@@ -14,7 +14,7 @@ class UsersController extends Controller
 
     public function login()
     {
-    	$tokenName = 'trello-clone';
+    	$tokenName = 'trellu';
 
     	// Get the items from the request.
 
@@ -63,7 +63,7 @@ class UsersController extends Controller
 
     public function register(Request $request) 
     {
-    	$tokenName = 'trello-clone';
+    	$tokenName = 'trellu';
 
     	// Validate the request and make sure everything was sent in correctly.
     	$validator = Validator::make($request->all(), User::$rules);
