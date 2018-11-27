@@ -84,7 +84,7 @@
                       })
                       .then(response => {
                         // Get the name and token from the successful login request, and put them in localStorage for Auth purposes.
-                        localStorage.setItem('user',response.data.success.name)
+                        localStorage.setItem('username',response.data.success.name)
                         localStorage.setItem('userToken',response.data.success.token)
 
                         // If there is an auth token, then send them to their board with their tasks. 

@@ -73,7 +73,7 @@
                         }
                       })
                       .catch(function (error) {
-                        console.error(error);
+                        toastr.error("Incorrect username or password. Please try again.");
                       });
                 }
             }
