@@ -109,16 +109,18 @@
 
                 if (order !== false) {
                     axios.put(`/api/task/${task_id}`, {order, category_id}).then(response => {
-                        //
+                        // Leaving this blank for future changes.
                     });
                 }
             },
 
             endEditing(task) {
+                // Set this to null so the text field goes away.
                 this.editingTask = null
 
                 axios.put(`/api/task/${task.id}`, {name: task.name}).then(response => {
                     //
+                    toastr.success("Task has been edited.");
                 })
             },
 
@@ -130,6 +132,7 @@
                 // delete task here via Axios request.
                 axios.delete(`/api/task/${taskId}`).then(response => {
                     //
+                    toastr.error("Task has been removed.");
                 });
             }
         },
