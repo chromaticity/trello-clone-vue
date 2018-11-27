@@ -86,6 +86,7 @@
 
                 axios.post('/api/task', {user_id, name, order, category_id}).then(response => {
                     this.categories[id].tasks.push(response.data.data)
+                    toastr.success("Successfully added task!");
                 })
             },
 
@@ -129,7 +130,6 @@
                 // delete task here via Axios request.
                 axios.delete(`/api/task/${taskId}`).then(response => {
                     //
-                    this.categories[taskId].tasks.push(response.data.data)
                 });
             }
         },
