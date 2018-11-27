@@ -12,6 +12,7 @@
                                 <transition-group :id="element.id">
                                     <div v-for="task,index in element.tasks" :key="task.category_id+','+task.order" class="transit-1" :id="task.id">
                                         <div class="small-card">
+                                            <a href="#" @click="deleteTask(task.id)" v-on:click="element.tasks.splice(index, 1)"><i class="fa fa-trash delete-icon"></i></a>
                                             <textarea v-if="task === editingTask" class="text-input" @keyup.enter="endEditing(task)" @blur="endEditing(task)" v-model="task.name"></textarea>
                                             <label for="checkbox" v-if="task !== editingTask" @dblclick="editTask(task)">{{ task.name }}</label>
                                         </div>
@@ -57,6 +58,10 @@
         margin-left: 15px;
         width: 350px;
     }
+    .delete-icon {
+        top: 0px;
+        right: 0px;
+    }
 </style>
 
 <script>
@@ -73,6 +78,7 @@
         },
         methods : {
             addNew(id) {
+                // allows you to add a task.
                 let user_id = 1
                 let name = "New task"
                 let category_id = this.categories[id].id
@@ -84,6 +90,7 @@
             },
 
             loadTasks() {
+                // Loads all of the tasks upon initial load of the page.
                 this.categories.map(category => {
                   axios.get(`/api/category/${category.id}/tasks`).then(response => {
                       category.tasks = response.data
@@ -92,6 +99,7 @@
             },
 
             changeOrder(data){
+                // Change the order/category of the task. However, changing orders is pretty finicky right now.
                 let toTask = data.to
                 let fromTask = data.from
                 let task_id = data.item.id
@@ -115,6 +123,14 @@
 
             editTask(task){
                 this.editingTask = task
+            },
+
+            deleteTask(taskId) {
+                // delete task here via Axios request.
+                axios.delete(`/api/task/${taskId}`).then(response => {
+                    //
+                    this.categories[taskId].tasks.push(response.data.data)
+                });
             }
         },
 
