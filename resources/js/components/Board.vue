@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid">
+        <h4>Double click on the task to edit it!</h4>
         <div class="row justify-content-left">
             <transition-group class="row">
                 <div v-for="element,index in categories" :key="element.id">
