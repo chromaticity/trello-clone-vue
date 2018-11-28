@@ -92,8 +92,13 @@
                             this.$router.go('/board')
                         }
                       })
-                      .catch(error => {
-                        console.error(error);
+                      .catch((error) => {
+                        if( error.response ){
+                            // loop through errors and generate toastr messages.
+                            $.each( error.response.data.error, function( key, value ) {
+                                toastr.error(value);
+                            });
+                        }
                       });
                 } else {
                     // Empty the fields if the passwords to not match.
